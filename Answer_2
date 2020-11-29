@@ -1,0 +1,38 @@
+
+#include <iostream>
+using namespace std;
+
+double func(double x)
+{
+    return (x * x * x) - (6 * x * x) + (11 * x) - 6;
+}
+
+double deri_func(double x)
+{
+    return (3 * x * x) - (12 * x) + 11;
+}
+
+int main()
+{
+    int a = 0;
+    while (a < 5)
+    {
+        double x_old, x_new;
+        cin >> x_new;
+        double func_value, deri_func_value;
+
+        do
+        {
+            x_old = x_new;
+            func_value = func(x_old);
+            deri_func_value = deri_func(x_old);
+            x_new = x_old - (func_value / deri_func_value);
+
+        } while (abs(x_new - x_old) > (1e-6));
+
+        cout << x_new << endl;
+
+        a++;
+    }
+}
+
