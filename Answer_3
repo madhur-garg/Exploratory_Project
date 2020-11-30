@@ -1,0 +1,46 @@
+
+#include <iostream>
+using namespace std;
+
+double func(double v)
+{
+    return (v * v * v) - (0.03065 * v * v) + (5.46 * (1e-6) * v) - (1.666 * (1e-10));
+}
+
+double deri_func(double v)
+{
+    return (3 * v * v) - (2 * 0.03065 * v) + (5.46 * (1e-6));
+}
+
+int main()
+{
+    double v_new = (8.314*373.15)/(1e5);
+    double v_old, vv, vl;
+    double func_vxlue, deri_func_vxlue;
+
+    do
+    {
+        v_old = v_new;
+        func_vxlue = func(v_old);
+        deri_func_vxlue = deri_func(v_old);
+        v_new = v_old - (func_vxlue / deri_func_vxlue);
+
+    } while (abs(v_new - v_old) > (1e-7));
+
+    vv = v_new;
+    v_new = 3.049*(1e-5);  // b =  3.049*(1e-5)
+
+    do
+    {
+        v_old = v_new;
+        func_vxlue = func(v_old);
+        deri_func_vxlue = deri_func(v_old);
+        v_new = v_old - (func_vxlue / deri_func_vxlue);
+
+    } while (abs(v_new - v_old) > (1e-7));
+        
+    vl = v_new;
+    cout<<vv<<endl;
+    cout<<vl<<endl;
+    cout<<abs(vv - vl)<<endl;
+}
