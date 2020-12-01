@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    double x1 = 0.2, x2 = 0.45, x3 = 0.35, p = 900, t1, t2, t3, t_assume, p1, p2, p3, p_update, bpt; // p is in KPa and t is in celcius
+
+    t1 = (1892.47 / (13.7713 - log(p))) - 248.82;
+    t2 = (2151.63 / (13.7224 - log(p))) - 236.91;
+    t3 = (2477.07 / (13.8183 - log(p))) - 233.21;
+
+    t_assume = (x1 * t1) + (x2 * t2) + (x3 * t3);
+
+    p1 = exp(13.7719 - (1892.47 / (t_assume + 248.82)));
+    p2 = exp(13.7224 - (2151.63 / (t_assume + 236.91)));
+    p3 = exp(13.8183 - (2477.07 / (t_assume + 233.21)));
+
+    p_update = p / (x1 + ((x2 * p2) / p1) + ((x3 * p3) / p1));
+
+    bpt = ((1892.47) / (13.7713 - log(p_update))) - 248.82;
+
+    cout << "Bubble Point Temperature is: " << bpt << endl;
+}
