@@ -1,0 +1,56 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+
+double func(double v)
+{
+    return (v * v * v) - (0.0124 * v * v) + (8.326 * (1e-6) * v) - (7.74 * (1e-10));
+}
+
+double deri_func(double v)
+{
+    return (3 * v * v) - (2 * 0.0124 * v) + (8.326 * (1e-6));
+}
+
+int main()
+{
+    double a = 45.203, b = 8.267e-05, r = 8.314, t = 373.15, p_new = 2.5e5, fv, fl, p;
+    double v_old, vv, vl, v_new;
+    double func_vxlue, deri_func_vxlue;
+
+    do
+    {
+        p = p_new;
+        v_new = (r * t) / p; //     RT/P
+
+        do
+        {
+            v_old = v_new;
+            func_vxlue = func(v_old);
+            deri_func_vxlue = deri_func(v_old);
+            v_new = v_old - (func_vxlue / deri_func_vxlue);
+
+        } while (abs(v_new - v_old) > (1e-7));
+
+        vv = v_new;
+        v_new = 3.049 * (1e-5); // b =  3.049*(1e-5)
+
+        do
+        {
+            v_old = v_new;
+            func_vxlue = func(v_old);
+            deri_func_vxlue = deri_func(v_old);
+            v_new = v_old - (func_vxlue / deri_func_vxlue);
+
+        } while (abs(v_new - v_old) > (1e-7));
+
+        vl = v_new;
+
+        fv = p * exp(b / (vv - b) + log((r * t) / (p * (vv - b))) - (a / (r * pow(t, 1.5))) * ((1 / (vv + b)) - ((1 / b) * (log(vv / vv + b)))));
+        fl = p * exp(b / (vl - b) + log((r * t) / (p * (vl - b))) - (a / (r * pow(t, 1.5))) * ((1 / (vl + b)) - ((1 / b) * (log(vl / vl + b)))));
+
+        p_new = p * (fl / fv);
+    } while (abs(p_new - p) > 0.01);
+
+    cout << " Vapour pressure is " << p_new << endl;
+}
