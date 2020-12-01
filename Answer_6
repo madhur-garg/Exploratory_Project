@@ -1,0 +1,22 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    double y1 = 0.2, y2 = 0.45, y3 = 0.35, p = 900, t1, t2, t3, t_assume, p1, p2, p3, p_update, dpt; // p is in KPa and t is in celcius
+
+    t1 = (1892.47 / (13.7713 - log(p))) - 248.82;
+    t2 = (2151.63 / (13.7224 - log(p))) - 236.91;
+    t3 = (2477.07 / (13.8183 - log(p))) - 233.21;
+
+    t_assume = (y1 * t1) + (y2 * t2) + (y3 * t3);
+
+    p1 = exp(13.7719 - (1892.47 / (t_assume + 248.82)));
+    p2 = exp(13.7224 - (2151.63 / (t_assume + 236.91)));
+    p3 = exp(13.8183 - (2477.07 / (t_assume + 233.21)));
+
+    p_update = p*(y1 + ((y2*p1)/p2) + ((y3*p1)/p3));
+    dpt = ((1892.47) / (13.7713 - log(p_update))) - 248.82;
+
+    cout << "Dew Point Temperature is: " << dpt << endl;
+}
