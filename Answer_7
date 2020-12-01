@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    double z1 = 0.2, z2 = 0.45, z3 = 0.35, t = 80, p = 900; //celcius and KPa
+    double p1, p2, p3, k1, k2, k3, v, y1, y2, y3, x1, x2, x3;
+
+    p1 = exp(13.7713 - ((1892.47)/(t + 248.82)));
+    p2 = exp(13.7224 - ((2151.63)/(t + 236.91)));
+    p3 = exp(13.8183 - ((2477.07)/(t + 233.21)));
+
+    k1 = p1/p;
+    k2 = p2/p;
+    k3 = p3/p;
+
+    // Since y1 + y2 + y3 = 1
+    // ((k1*z1)/(1-v+(v*k1))) + ((k2*z2)/(1-v+(v*k2))) + ((k3*z3)/(1-v+(v*k3))) -1 = 0 on solving this we get:
+    v = 0.463624;  // or 46.3624%
+
+    y1 = ((k1*z1)/(1-v+(v*k1)));
+    y2 = ((k2*z2)/(1-v+(v*k2)));
+    y3 = ((k3*z3)/(1-v+(v*k3)));
+
+    cout<<"y1 = "<<y1<<endl;
+    cout<<"y2 = "<<y2<<endl;
+    cout<<"y3 = "<<y3<<endl;
+    cout<<y1 +y2 +y3<<endl;
+
+    x1 = y1/k1;
+    x2 = y2/k2;
+    x3 = y3/k3;
+    cout<<"x1 = "<<x1<<endl;
+    cout<<"x2 = "<<x2<<endl;
+    cout<<"x3 = "<<x3<<endl;
+    cout<<x1+x2+x3<<endl;
+}
